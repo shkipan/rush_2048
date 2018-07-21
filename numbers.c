@@ -6,47 +6,52 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/21 11:15:43 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/21 13:08:47 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/21 20:38:21 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
+void	add_number(int mas[4][4])
+{
+	short	num_pos;
+
+	srand(time(NULL));
+	num_pos = rand() % 16;
+	while (mas[num_pos / 4][num_pos % 4] != 0)
+		num_pos = rand() % 16;
+	mas[num_pos / 4][num_pos % 4] = (rand() % 8 == 4) ? 4 : 2;
+}
+
 void	create_numbers(int mas[4][4])
 {
 	short	i;
 	short	j;
-	short	num_pos1;
-	short	num_pos2;
-	short	x;
 
-	srand(time(NULL));
-	num_pos1 = rand() % 16;
-	num_pos2 = rand() % 15;
-	num_pos2 += (num_pos2 == num_pos1) ? 1 : 0;
 	i = -1;
 	while (++i < 4)
 	{
 		j = -1;
 		while (++j < 4)
-		{
-			x = (rand() % 8 == 4) ? 4 : 2;
-			mas[i][j] = (i * 4 + j == num_pos1 || i * 4 + j == num_pos2)
-				? x : 0;
-		}
+			mas[i][j] = 0;
 	}
+	add_number(mas);
+	add_number(mas);
 }
 
 void	print_numbers(WINDOW *win, int mas[4][4])
 {
-	int		i;
-	int		j;
+	short	i;
+	short	j;
 
 	i = -1;
 	while (++i < 4)
 	{
 		j = -1;
 		while (++j < 4)
-			mvwprintw(win, j + 1, i + 1, "%d", mas[i][j]);
+			(mas[i][j]) ? mvwprintw(win, 2 * j + 1, 4 * i + 1, "%4d", mas[i][j]) :
+				mvwprintw(win, 2 * j + 1, 4 * i + 1, "%4s", "");
 	}
+	mvwprintw(win, 0, 0, "%s", "");
+	wrefresh(win);
 }

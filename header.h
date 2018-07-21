@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/21 09:58:12 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/21 13:09:51 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/21 20:40:42 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,13 @@ typedef struct	s_window
 	t_point		start_win;
 }				t_window;
 
+void			add_number(int mas[4][4]);
 void			create_numbers(int mas[4][4]);
 void			print_numbers(WINDOW *win, int mas[4][4]);
 
-void			move_up(WINDOW *win);
-void			move_down(WINDOW *win);
-void			move_left(WINDOW *win);
-void			move_right(WINDOW *win);
+void			move_up(int mas[4][4]);
+void			move_down(int mas[4][4]);
+void			move_left(int mas[4][4]);
+void			move_right(int mas[4][4]);
 
 #endif
