@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/21 11:15:43 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/21 20:38:21 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/22 12:35:10 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	add_number(int mas[4][4])
 	mas[num_pos / 4][num_pos % 4] = (rand() % 8 == 4) ? 4 : 2;
 }
 
-void	create_numbers(int mas[4][4])
+void	create_numbers(int mas[4][4], WINDOW *win)
 {
 	short	i;
 	short	j;
@@ -37,6 +37,7 @@ void	create_numbers(int mas[4][4])
 	}
 	add_number(mas);
 	add_number(mas);
+	print_numbers(win, mas);
 }
 
 void	print_numbers(WINDOW *win, int mas[4][4])
@@ -49,8 +50,9 @@ void	print_numbers(WINDOW *win, int mas[4][4])
 	{
 		j = -1;
 		while (++j < 4)
-			(mas[i][j]) ? mvwprintw(win, 2 * j + 1, 4 * i + 1, "%4d", mas[i][j]) :
-				mvwprintw(win, 2 * j + 1, 4 * i + 1, "%4s", "");
+			(mas[i][j]) ?
+				mvwprintw(win, 2 * j + 1, 5 * i + 1, " %4d", mas[i][j]) :
+				mvwprintw(win, 2 * j + 1, 5 * i + 1, "%5s", "");
 	}
 	mvwprintw(win, 0, 0, "%s", "");
 	wrefresh(win);

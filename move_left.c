@@ -6,13 +6,13 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/21 19:32:08 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/21 20:35:10 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/22 12:22:31 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-static void	find_pair_left(int mas[4][4], int x, int y)
+static short	find_pair_left(int mas[4][4], int x, int y)
 {
 	short	step;
 
@@ -23,10 +23,12 @@ static void	find_pair_left(int mas[4][4], int x, int y)
 	{
 		mas[x][y] *= 2;
 		mas[x + step][y] = 0;
+		return (1);
 	}
+	return (0);
 }
 
-static void	push_all_left(int mas[4][4])
+static void		push_all_left(int mas[4][4], short *x)
 {
 	short	step;
 	short	i;
@@ -46,26 +48,29 @@ static void	push_all_left(int mas[4][4])
 			{
 				mas[i][j] = mas[i + step][j];
 				mas[i + step][j] = 0;
+				*x += 1;
 			}
 		}
 	}
 }
 
-void		move_left(int mas[4][4])
+short			move_left(int mas[4][4])
 {
 	short	i;
 	short	j;
+	short	x;
 
 	i = -1;
+	x = 0;
 	while (++i < 3)
 	{
 		j = -1;
 		while (++j < 4)
 		{
 			if (mas[i][j] != 0)
-				find_pair_left(mas, i, j);
+				x += find_pair_left(mas, i, j);
 		}
 	}
-	push_all_left(mas);
-	add_number(mas);
+	push_all_left(mas, &x);
+	return (x > 0);
 }

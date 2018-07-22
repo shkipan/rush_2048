@@ -6,19 +6,11 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/21 09:57:26 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/21 20:40:05 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/22 12:38:27 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
-
-static void		init_window(t_window *win_prop)
-{
-	win_prop->heigth = 10;
-	win_prop->width = 20;
-	win_prop->start_win.x = 1;
-	win_prop->start_win.y = 1;
-}
 
 static int		end_game(int numbers[4][4])
 {
@@ -50,44 +42,61 @@ static int		end_game(int numbers[4][4])
 
 static int		hook_keys(int key, WINDOW *win, int numbers[4][4])
 {
-	if (key == KEY_UP)
-		move_up(numbers);
-	if (key == KEY_DOWN)
-		move_down(numbers);
-	if (key == KEY_LEFT)
-		move_left(numbers);
-	if (key == KEY_RIGHT)
-		move_right(numbers);
+	short	res;
+
+	res = 1;
 	if (end_game(numbers))
 		return (0);
+	if (key == KEY_UP)
+		res = move_up(numbers);
+	else if (key == KEY_DOWN)
+		res = move_down(numbers);
+	else if (key == KEY_LEFT)
+		res = move_left(numbers);
+	else if (key == KEY_RIGHT)
+		res = move_right(numbers);
+	else
+		return (1);
+	if (res)
+		add_number(numbers);
 	print_numbers(win, numbers);
 	return (1);
+}
+
+void			print_info(short c, WINDOW *win_info)
+{
+	if (c == 0)
+		mvwprintw(win_info, 1, 5, "Game Over");
+	if (c == 1)
+		mvwprintw(win_info, 1, 5, "Goodbye");
+	wrefresh(win_info);
 }
 
 int				main(void)
 {
 	WINDOW		*win;
-	WINDOW		*win1;
+	WINDOW		*win_info;
+	WINDOW		*win_champs;
 	t_window	win_prop;
 	int			numbers[4][4];
 	int			key;
+	short		c;
 
 	initscr();
 	cbreak();
 	noecho();
-	init_window(&win_prop);
-	win = newwin(win_prop.heigth, win_prop.width,
-			win_prop.start_win.x, win_prop.start_win.y);
-	box(win, 0, 0);
-	win1 = newwin(22, 20, 1, 25);
-	box(win1, 0, 0);
-	wrefresh(win1);
-	create_numbers(numbers);
-	print_numbers(win, numbers);
+	win = NULL;
+	win_info = NULL;
+	win_champs = NULL;
+	init_window(&win_prop, &win);
+	init_help(&win_info, &win_champs);
+	create_numbers(numbers, win);
 	keypad(win, 1);
 	while ((key = wgetch(win)) != 27)
-		if (!hook_keys(key, win, numbers))
+		if (!(c = hook_keys(key, win, numbers)))
 			break ;
+	print_info(c, win_info);
+	wgetch(win);
 	endwin();
 	system("leaks game_2048");
 	return (0);
