@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/21 19:25:59 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/22 12:24:04 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/22 13:25:29 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void		push_all_down(int mas[4][4], short *x)
 	}
 }
 
-short		move_down(int mas[4][4])
+short			move_down(int mas[4][4])
 {
 	short	i;
 	short	j;

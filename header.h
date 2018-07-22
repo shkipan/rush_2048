@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/21 09:58:12 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/22 12:38:28 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/22 15:24:02 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,26 @@
 # include <ncurses.h>
 # include <time.h>
 
-# define END_GAME 2048
-
-typedef struct	s_point
+enum	e_const
 {
-	short		x;
-	short		y;
-}				t_point;
+	WIN_VALUE = 2048
+};
 
-typedef struct	s_window
+typedef struct	s_result
 {
-	short		heigth;
-	short		width;
-	t_point		start_win;
-}				t_window;
+	int			result;
+	WINDOW		*win[3];
+	char		won;
+}				t_result;
 
 void			add_number(int mas[4][4]);
 void			create_numbers(int mas[4][4], WINDOW *win);
 void			print_numbers(WINDOW *win, int mas[4][4]);
+short			check_number(int mas[4][4], short x, short y);
+void			copy_numbers(int src[4][4], int dst[4][4]);
 
-void			init_help(WINDOW **win_info, WINDOW **win_champs);
-void			init_window(t_window *win_prop, WINDOW **win);
+void			init_window(WINDOW **win,
+		WINDOW **win_info, WINDOW **win_champs);
 
 short			move_up(int mas[4][4]);
 short			move_down(int mas[4][4]);
