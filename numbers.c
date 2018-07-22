@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/21 11:15:43 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/22 17:44:53 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/22 18:37:22 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ void	create_numbers(int mas[4][4], WINDOW *win)
 	}
 	add_number(mas);
 	add_number(mas);
-	mas[0][0] = 1024;
-	mas[0][1] = 1024;
 	print_numbers(win, mas);
 }
 
