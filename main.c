@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/21 09:57:26 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/22 17:44:43 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/22 18:10:01 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,14 @@ static void		doing(t_result res)
 	short		c;
 
 	create_numbers(numbers, res.win[0]);
-	mvwprintw(res.win[2], 2, 2, "%8s", "");
-	mvwprintw(res.win[2], 2, 2, "%d", res.result);
-	wrefresh(res.win[2]);
 	keypad(res.win[0], 1);
+	print_result(&res);
 	while ((key = wgetch(res.win[0])) != 27)
 	{
 		draw_map(res.win[0]);
 		update_map(res.win[1], res.win[2]);
+		print_numbers(res.win[0], numbers);
+		print_result(&res);
 		if ((c = hook_keys(key, &res, numbers, reserve)) != 1)
 			break ;
 	}
@@ -124,10 +124,11 @@ int				main(void)
 		res.win[c] = NULL;
 	res.won = 0;
 	res.result = 0;
+	res.log = reader();
 	init_window(&res.win[0], &res.win[1], &res.win[2]);
 	draw_map(res.win[0]);
 	doing(res);
 	endwin();
-//	system("leaks game_2048");
+	system("leaks game_2048");
 	return (0);
 }

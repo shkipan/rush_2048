@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/21 09:58:12 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/22 17:43:07 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/22 18:03:27 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft/libft.h"
 # include <ncurses.h>
 # include <time.h>
+# include <fcntl.h>
 
 # define INFO_HEIGHT 4
 # define CHAMPS_WIDTH 30
@@ -28,10 +29,13 @@ enum	e_const
 
 typedef struct	s_result
 {
-	int			result;
 	WINDOW		*win[3];
+	char		**log;
+	int			result;
 	char		won;
 }				t_result;
+
+char			**reader(void);
 
 void			add_number(int mas[4][4]);
 void			create_numbers(int mas[4][4], WINDOW *win);
