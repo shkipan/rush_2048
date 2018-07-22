@@ -1,0 +1,4 @@
+*.swp
+*.o
+game_2048
+.DS_Store

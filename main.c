@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/21 09:57:26 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/22 18:10:01 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/22 18:26:51 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int		hook_keys(int key, t_result *res, int numbers[4][4],
 	return (1);
 }
 
-static void		print_info(short c, t_result *res)
+static int		print_info(short c, t_result *res)
 {
 	int	key;
 
@@ -82,11 +82,12 @@ static void		print_info(short c, t_result *res)
 		mvwprintw(res->win[1], 1, 3, "Goodbye");
 	wrefresh(res->win[1]);
 	if (c == 1)
-		return ;
+		return (0);
 	keypad(res->win[1], 1);
 	key = wgetch(res->win[1]);
-	while (key != 27)
+	while (key != 27 && key != 114)
 		key = wgetch(res->win[1]);
+	return (key);
 }
 
 static void		doing(t_result res)
@@ -96,6 +97,8 @@ static void		doing(t_result res)
 	int			key;
 	short		c;
 
+	res.won = 0;
+	res.result = 0;
 	create_numbers(numbers, res.win[0]);
 	keypad(res.win[0], 1);
 	print_result(&res);
@@ -108,7 +111,9 @@ static void		doing(t_result res)
 		if ((c = hook_keys(key, &res, numbers, reserve)) != 1)
 			break ;
 	}
-	print_info(c, &res);
+	key = print_info(c, &res);
+	if (key == 114)
+		doing(res);
 }
 
 int				main(void)
@@ -122,8 +127,6 @@ int				main(void)
 	c = -1;
 	while (++c < 3)
 		res.win[c] = NULL;
-	res.won = 0;
-	res.result = 0;
 	res.log = reader();
 	init_window(&res.win[0], &res.win[1], &res.win[2]);
 	draw_map(res.win[0]);
