@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/21 09:58:12 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/22 15:24:02 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/22 17:43:07 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 # include "libft/libft.h"
 # include <ncurses.h>
 # include <time.h>
+
+# define INFO_HEIGHT 4
+# define CHAMPS_WIDTH 30
+
 
 enum	e_const
 {
@@ -38,9 +42,13 @@ void			copy_numbers(int src[4][4], int dst[4][4]);
 void			init_window(WINDOW **win,
 		WINDOW **win_info, WINDOW **win_champs);
 
-short			move_up(int mas[4][4]);
-short			move_down(int mas[4][4]);
-short			move_left(int mas[4][4]);
-short			move_right(int mas[4][4]);
+int				move_up(int mas[4][4], t_result *res);
+int				move_down(int mas[4][4], t_result *res);
+int				move_left(int mas[4][4], t_result *res);
+int				move_right(int mas[4][4], t_result *res);
+
+void			print_result(t_result *res);
+void			draw_map(WINDOW *win);
+void			update_map(WINDOW *win_info, WINDOW *win_champs);
 
 #endif

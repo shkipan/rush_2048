@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/21 09:57:26 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/22 15:31:20 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/22 17:44:43 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,34 +40,34 @@ static int		end_game(int numbers[4][4])
 	return (0);
 }
 
-static int		hook_keys(int key, t_result res, int numbers[4][4],
+static int		hook_keys(int key, t_result *res, int numbers[4][4],
 		int reserve[4][4])
 {
-	short	result;
+	int		result;
 	short	end;
 
 	result = 1;
 	if (key == KEY_UP)
-		result = move_up(numbers);
+		result = move_up(numbers, res);
 	else if (key == KEY_DOWN)
-		result = move_down(numbers);
+		result = move_down(numbers, res);
 	else if (key == KEY_LEFT)
-		result = move_left(numbers);
+		result = move_left(numbers, res);
 	else if (key == KEY_RIGHT)
-		result = move_right(numbers);
+		result = move_right(numbers, res);
 	else if (key == 117)
 		copy_numbers(reserve, numbers);
 	else
 		return (1);
 	if (result && key != 117)
 		add_number(numbers);
-	print_numbers(res.win[0], numbers);
+	print_numbers(res->win[0], numbers);
 	if ((end = end_game(numbers)))
 		return (end);
 	return (1);
 }
 
-static void		print_info(short c, t_result *res) 
+static void		print_info(short c, t_result *res)
 {
 	int	key;
 
@@ -97,10 +97,15 @@ static void		doing(t_result res)
 	short		c;
 
 	create_numbers(numbers, res.win[0]);
+	mvwprintw(res.win[2], 2, 2, "%8s", "");
+	mvwprintw(res.win[2], 2, 2, "%d", res.result);
+	wrefresh(res.win[2]);
 	keypad(res.win[0], 1);
 	while ((key = wgetch(res.win[0])) != 27)
 	{
-		if ((c = hook_keys(key, res, numbers, reserve)) != 1)
+		draw_map(res.win[0]);
+		update_map(res.win[1], res.win[2]);
+		if ((c = hook_keys(key, &res, numbers, reserve)) != 1)
 			break ;
 	}
 	print_info(c, &res);
@@ -120,6 +125,7 @@ int				main(void)
 	res.won = 0;
 	res.result = 0;
 	init_window(&res.win[0], &res.win[1], &res.win[2]);
+	draw_map(res.win[0]);
 	doing(res);
 	endwin();
 //	system("leaks game_2048");

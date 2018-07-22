@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/21 11:15:43 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/22 15:28:15 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/22 17:44:53 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	create_numbers(int mas[4][4], WINDOW *win)
 	}
 	add_number(mas);
 	add_number(mas);
+	mas[0][0] = 1024;
+	mas[0][1] = 1024;
 	print_numbers(win, mas);
 }
 
@@ -44,15 +46,20 @@ void	print_numbers(WINDOW *win, int mas[4][4])
 {
 	short	i;
 	short	j;
+	int		y;
+	int		x;
 
 	i = -1;
+	getmaxyx(stdscr, y, x);
 	while (++i < 4)
 	{
 		j = -1;
 		while (++j < 4)
 			(mas[i][j]) ?
-				mvwprintw(win, 2 * j + 1, 5 * i + 1, " %4d", mas[i][j]) :
-				mvwprintw(win, 2 * j + 1, 5 * i + 1, "%5s", "");
+				mvwprintw(win, ((y - 5) / 4) * j + y / 8, ((x - CHAMPS_WIDTH)
+							/ 4) * i + x / 8 - 5, " %4d", mas[i][j]) :
+				mvwprintw(win, ((y - 5) / 4) * j + y / 8, ((x - CHAMPS_WIDTH)
+							/ 4) * i + x / 8 - 5, "%5s", "");
 	}
 	mvwprintw(win, 0, 0, "%s", "");
 	wrefresh(win);

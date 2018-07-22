@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   window_init.c                                      :+:      :+:    :+:   */
+/*   result.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/22 12:24:14 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/22 17:42:28 by dskrypny         ###   ########.fr       */
+/*   Created: 2018/07/22 17:05:01 by dskrypny          #+#    #+#             */
+/*   Updated: 2018/07/22 17:06:53 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-void		init_window(WINDOW **win, WINDOW **win_info, WINDOW **win_champs)
+void	print_result(t_result *res)
 {
-	int x;
-	int y;
-
-	getmaxyx(stdscr, y, x);
-	*win = newwin(y, x - CHAMPS_WIDTH, INFO_HEIGHT, CHAMPS_WIDTH);
-	getmaxyx(stdscr, y, x);
-	*win_info = newwin(INFO_HEIGHT, x - 1, 0, 0);
-	box(*win_info, 0, 0);
-	wrefresh(*win_info);
-	*win_champs = newwin(y - INFO_HEIGHT, CHAMPS_WIDTH, 4, 0);
-	box(*win_champs, 0, 0);
-	wrefresh(*win_champs);
+	mvwprintw(res->win[2], 2, 2, "%8s", "");
+	mvwprintw(res->win[2], 2, 2, "%d", res->result);
+	wrefresh(res->win[2]);
 }
