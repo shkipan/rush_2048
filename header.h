@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/21 09:58:12 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/22 20:50:47 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/22 23:05:24 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,27 @@
 # include <ncurses.h>
 # include <time.h>
 # include <fcntl.h>
+# include <stdio.h>
 
 # define INFO_HEIGHT 4
 # define CHAMPS_WIDTH 30
 
 enum	e_const
 {
-	WIN_VALUE = 2048
+	WIN_VALUE = 8
 };
 
 typedef struct	s_result
 {
-	char		**log;
+	char		*name;
 	int			numbers[4][4];
 	WINDOW		*win[3];
 	int			result;
 	char		won;
 }				t_result;
 
-char			**reader(void);
+short			is_power2(int x);
+char			*read_name(void);
 
 void			add_number(int mas[4][4]);
 void			create_numbers(t_result *res);

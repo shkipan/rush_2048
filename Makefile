@@ -6,7 +6,7 @@
 #    By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/07 14:30:48 by dskrypny          #+#    #+#              #
-#    Updated: 2018/07/22 21:01:21 by dskrypny         ###   ########.fr        #
+#    Updated: 2018/07/22 22:05:35 by dskrypny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SOURCE = main.c \
 		 move_down.c \
 		 move_left.c \
 		 move_right.c \
+		 name.c \
 		 numbers.c \
 		 result.c \
 		 window_init.c \

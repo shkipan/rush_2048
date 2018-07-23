@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/22 12:24:14 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/22 18:08:37 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/22 21:37:01 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,17 @@ void		init_window(WINDOW **win, WINDOW **win_info, WINDOW **win_champs)
 	*win_champs = newwin(y - INFO_HEIGHT, CHAMPS_WIDTH, 4, 0);
 	box(*win_champs, 0, 0);
 	wrefresh(*win_champs);
+}
+
+short		is_power2(int x)
+{
+	if (x == 0)
+		return (0);
+	while (x != 1)
+	{
+		if (x % 2)
+			return (0);
+		x /= 2;
+	}
+	return (1);
 }

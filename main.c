@@ -6,7 +6,7 @@
 /*   By: dskrypny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/21 09:57:26 by dskrypny          #+#    #+#             */
-/*   Updated: 2018/07/22 21:00:48 by dskrypny         ###   ########.fr       */
+/*   Updated: 2018/07/22 23:06:05 by dskrypny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,11 @@ static int		print_info(short c, t_result *res)
 	wrefresh(res->win[1]);
 	keypad(res->win[1], 1);
 	key = wgetch(res->win[1]);
-	if ((c == 1) || (c == 3 && key == 27) || (c == 2 && key != 114))
+	if ((c == 1) || (c == 2 && key != 114))
 		return ((c == 1) ? 27 : key);
-	while (key != 114)
+	while (key != 114 && key != 27)
 		key = wgetch(res->win[1]);
-	create_numbers(res);
+	(key == 114) ? create_numbers(res) : NULL;
 	return (key);
 }
 
@@ -125,17 +125,21 @@ int				main(void)
 	t_result	res;
 	short		c;
 
+	if (WIN_VALUE < 4 || WIN_VALUE > 16384 || !is_power2(WIN_VALUE))
+	{
+		ft_printf("%{red}s\n", "Invalid number for win!");
+		return (1);
+	}
+	res.name = read_name();
 	initscr();
 	cbreak();
 	noecho();
 	c = -1;
 	while (++c < 3)
 		res.win[c] = NULL;
-	res.log = reader();
 	init_window(&res.win[0], &res.win[1], &res.win[2]);
 	draw_map(res.win[0]);
 	doing(res);
 	endwin();
-	system("leaks game_2048");
 	return (0);
 }
